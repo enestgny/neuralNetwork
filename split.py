@@ -6,7 +6,6 @@ from test import test
 
 
 df = pd.read_csv('Iris.csv')
-#print(df.head())
 column_name='Species'
 targets=np.array(df[column_name])
 # df.drop(columns=[column_name],inplace=True)
