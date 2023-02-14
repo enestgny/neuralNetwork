@@ -11,13 +11,10 @@ class test():
     def start(self):
         b = 0
         Test = Definition(self.csv)           #Ve sistemimizi tahmin yapabilir duruma getirmiş oluyoruz.
-        # arg = np.random.default_rng(1) 
-        # bias = arg.random()
         a = pd.read_csv(self.weights)
         l= pd.read_csv('bias.csv')
         bb= np.array(l)
         bias=np.delete(bb,0,1)
-        print(bias)
         w = np.array(a)
         ww = np.delete(w,0,1)
         for k in range(len(Test.Species)):

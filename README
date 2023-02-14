@@ -1,2 +1,22 @@
-Example of simple neural network.
+1. Numpy ve pandas kütüphanesi
+
+sudo apt-get install python-pip
+sudo pip install numpy
+sudo pip install pandas
+
+2.Sklearn kütüphanesi
+
+sudo pip install sklearn
+
+3.Train işlemi için:
+
+neuralNetwork('csv/train.csv').start()
+
+eklenir
+
+4.Test işlemi için:
+
+test('csv/test.csv','weights.csv').start()
+
+eklenir.
 
