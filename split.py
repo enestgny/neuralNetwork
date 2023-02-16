@@ -20,8 +20,8 @@ for i in range(len(targets)):
 
 x_train,x_test,y_train,y_test =  train_test_split(x_type,targets,test_size=0.2,shuffle=True)
 
-pd.DataFrame(x_train).to_csv("/home/enes/neuralNetwork/csv/train.csv")
-pd.DataFrame(x_test).to_csv("/home/enes/neuralNetwork/csv/test.csv")
+pd.DataFrame(x_train).to_csv("csv/train.csv")
+pd.DataFrame(x_test).to_csv("csv/test.csv")
 
 neuralNetwork('csv/train.csv').start()
 test('csv/test.csv','weights.csv').start()

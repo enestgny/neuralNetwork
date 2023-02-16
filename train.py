@@ -91,11 +91,7 @@ class neuralNetwork():
     def start(self):
         arg = np.random.default_rng(1) #Random sayı üretmek için
         w1 = arg.random((1,4))
-        # w2 = arg.random((1,4))
-        # w3 = arg.random((1,4))
-        print('weights',w1)
         bias = arg.random()
-        print('bias',bias)
         CSV = Definition(self.csv)
         for i in range(len(CSV.data)):              # Tanımladığımız  fonksiyonlara datamızı okutuyoruz.
             R1 = Train(w1,bias,CSV.x[i],CSV.Species[i,4])
@@ -103,8 +99,6 @@ class neuralNetwork():
             R2 = R1.activationFunc(R22)
             R3 = R1.Error(R2)
             self.bias = R1.backBias(R2)
-            print('Activated',R2)
-            print('data',CSV.x[i])
             w1 = R1.backward(R2)
             plot_x2.append(i) #Grafik oluşturabilmek için değerlerimizi liste şeklinde topluyoruz.
             plot_y2.append(R3)
@@ -112,7 +106,7 @@ class neuralNetwork():
         plt.plot(plot_x2,plot_y2,color ="red")
         weights = pd.DataFrame(w1)# Son ulaşılan doğru ağırlıkların csv dosyasına kaydedilmesi
         bias = pd.DataFrame(self.bias)
-        bias.to_csv("/home/enes/Desktop/AESK/nesntesp5/bias.csv")
-        weights.to_csv("/home/enes/Desktop/AESK/nesntesp5/weights.csv")
+        bias.to_csv("bias.csv")
+        weights.to_csv("weights.csv")
         plt.show()
 
