@@ -36,7 +36,7 @@ class Train():
         self.data = data
         self.yDegeri = yDegeri
 
-    def activationFunc(self,zfunce):
+    def activationFunc(self,zfunce): #Farklı aktivasyon fonksiyonlarının tanımlanması 
         #Tanh Function
         # re = (2/(1+ np.exp((-2)*float(zfunce)))) -1
         # re = np.tanh(float(zfunce))
@@ -46,13 +46,13 @@ class Train():
         # elif zfunce < 0:
         #     0 
         #Leaky Relu Func
-        if zfunce  >= 0:
+        if zfunce.all()  >= 0:
             re = zfunce
-        elif zfunce < 0:
-            re= 0.01*zfunce
+        elif zfunce.all() < 0:
+            re= np.array([0.01,0.01,0.01])*zfunce
         #Swish Function
         # re = zfunce /(1+np.exp(float(-zfunce)))
-        return re        
+        return re
     
     def zfunc(self):    #İleri yayılımda kullanılan işlemler.
         z = np.dot(self.weight,self.data) + self.bias
@@ -67,9 +67,9 @@ class Train():
         # elif z < 0:
         #     self.weight = self.weight - 0.01*(z -self.yDegeri)*self.data*0
         #Leaky Relu Function
-        if z >= 0:
+        if z.all() >= 0:
             self.weight = self.weight - 0.01*(z -self.yDegeri)*self.data
-        elif z < 0:
+        elif z.all() < 0:
             self.weight = self.weight - 0.01*(z -self.yDegeri)*self.data*0.01
         #Swish Function
         # self.weight = self.weight - 0.01*(z -self.yDegeri)*self.data*((1+np.exp(float(-z))*(1+float(z)))/(np.exp(-2*float(z))+1+2*np.exp(float(-z))))
@@ -90,23 +90,29 @@ class neuralNetwork():
 
     def start(self):
         arg = np.random.default_rng(1) #Random sayı üretmek için
-        w = arg.random((1,4))
+        w1 = arg.random((1,4))
+        # w2 = arg.random((1,4))
+        # w3 = arg.random((1,4))
+        print('weights',w1)
         bias = arg.random()
+        print('bias',bias)
         CSV = Definition(self.csv)
         for i in range(len(CSV.data)):              # Tanımladığımız  fonksiyonlara datamızı okutuyoruz.
-            R1 = Train(w,bias,CSV.x[i],CSV.Species[i,4])
+            R1 = Train(w1,bias,CSV.x[i],CSV.Species[i,4])
             R22 = R1.zfunc()
             R2 = R1.activationFunc(R22)
             R3 = R1.Error(R2)
             self.bias = R1.backBias(R2)
-            w= R1.backward(R2)
+            print('Activated',R2)
+            print('data',CSV.x[i])
+            w1 = R1.backward(R2)
             plot_x2.append(i) #Grafik oluşturabilmek için değerlerimizi liste şeklinde topluyoruz.
             plot_y2.append(R3)
         plt.title("Value of error function")#Grafiğe isim verme
         plt.plot(plot_x2,plot_y2,color ="red")
-        #print(w,'111111111111111111111111111')
-        weights = pd.DataFrame(w)# Son ulaşılan doğru ağırlıkların csv dosyasına kaydedilmesi
+        weights = pd.DataFrame(w1)# Son ulaşılan doğru ağırlıkların csv dosyasına kaydedilmesi
         bias = pd.DataFrame(self.bias)
         bias.to_csv("/home/enes/Desktop/AESK/nesntesp5/bias.csv")
         weights.to_csv("/home/enes/Desktop/AESK/nesntesp5/weights.csv")
         plt.show()
+

@@ -4,7 +4,6 @@ import pandas as pd
 from train import neuralNetwork
 from test import test
 
-
 df = pd.read_csv('Iris.csv')
 column_name='Species'
 targets=np.array(df[column_name])
@@ -19,10 +18,10 @@ for i in range(len(targets)):
     elif targets[i] =='Iris-virginica':
         targets[i] = 3
 
-x_train,x_test,y_train,y_test =  train_test_split(x_type,targets,test_size=0.1,shuffle=True)
+x_train,x_test,y_train,y_test =  train_test_split(x_type,targets,test_size=0.2,shuffle=True)
 
-pd.DataFrame(x_train).to_csv("/home/enes/Desktop/AESK/nesntesp5/csv/train.csv")
-pd.DataFrame(x_test).to_csv("/home/enes/Desktop/AESK/nesntesp5/csv/test.csv")
+pd.DataFrame(x_train).to_csv("/home/enes/neuralNetwork/csv/train.csv")
+pd.DataFrame(x_test).to_csv("/home/enes/neuralNetwork/csv/test.csv")
 
 neuralNetwork('csv/train.csv').start()
 test('csv/test.csv','weights.csv').start()
